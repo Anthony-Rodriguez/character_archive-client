@@ -1,5 +1,31 @@
 @import '~bootstrap/scss/bootstrap';
 
+@media (min-width: 200px) {
+  .unauthenticated {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .authenticated {
+    align-content: center;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
+@media (min-width: 768px) {
+  .unauthenticated {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+
+  .authenticated {
+    align-content: center;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}
+
 $background-color: #dee2e6;
 $text-color: #4a4a4a;
 $main-text: 'Pacifico';
@@ -7,15 +33,11 @@ $main-text: 'Pacifico';
 * {
   color: $text-color;
   font-family: $main-text, sans-serif;
-  margin-left: 5%;
-  margin-right: 5%;
 }
 
-.unauthenticated {
-  margin-left: 5%;
-  margin-right: 5%;
+p {
+  text-align: center;
 }
-
 
 body {
   background-color: $background-color;

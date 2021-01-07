@@ -36,9 +36,31 @@ const signOut = function () {
   })
 }
 
+const index = function () {
+  return $.ajax({
+    url: config.apiUrl + '/characters',
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
+  })
+}
+const create = function (characterData) {
+  return $.ajax({
+  url: config.apiUrl + '/characters',
+  method: 'POST',
+  headers: {
+    Authorization: 'Bearer ' + store.user.token
+  },
+  data: characterData
+  })
+}
+
 module.exports = {
   signUp,
   signIn,
   changePassword,
-  signOut
+  signOut,
+  index,
+  create
 }

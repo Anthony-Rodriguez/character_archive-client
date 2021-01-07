@@ -103,6 +103,50 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="newCharacterModal" tabindex="-1" aria-labelledby="newCharacterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newCharacterModalLabel">Who are you making?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="new-character">
+                <input
+                  placeholder="First Name"
+                  type="text"
+                  name="character[firstName]"/>
+                <input
+                  placeholder="Last Name"
+                  type="text"
+                  name="character[lastName]"/>
+                <input
+                  placeholder="Hometown/Base"
+                  type="text"
+                  name="character[homeBase]"/>
+                <input
+                  placeholder="Race"
+                  type="text"
+                  name="character[race]"/>
+                <input
+                  placeholder="Age"
+                  type="number"
+                  name="character[age]"/>
+                <input
+                  placeholder="Level"
+                  type="number"
+                  name="character[level]"/>
+                <button type="submit" class="btn btn-primary">Create</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="unauthenticated">
         <nav class="navbar navbar-dark bg-dark justify-content-sm-center justify-content-lg-end">
           <button type="button" class="btn btn-dark btn-outline-light col-lg-2 col-sm-4 mr-1" data-toggle="modal" data-target="#signUpModal">
@@ -112,6 +156,7 @@
             Sign In
           </button>
         </nav>
+        <h1 id="home-message-unauthenticated"><p>Let's test this</p></h1>
       </div>
       <div class="authenticated">
         <nav class="navbar navbar-dark bg-dark justify-content-sm-center justify-content-lg-end">
@@ -120,7 +165,12 @@
             Change Password
           </button>
         </nav>
+        <h1 id="home-message-authenticated"><p>Let's test this</p></h1>
+        <button id="characters-index" type="button" class="btn btn-secondary btn-lg btn-block">My Characters</button>
+        <button id="characters-new" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#newCharacterModal">New Character</button>
+        <button id="characters-update" type="button" class="btn btn-secondary btn-lg btn-block">Update Character</button>
+        <button id="characters-delete" type="button" class="btn btn-secondary btn-lg btn-block">Delete Character</button>
+        <button id="home-button" type="button" class="btn btn-secondary btn-lg btn-block">Home</button>
       </div>
-      <h1 id="home-message"><p>Let's test this</p></h1>
     </body>
 </html>
