@@ -26,15 +26,15 @@
             </div>
             <div class="modal-body">
               <form id="sign-up">
-                <input
+                <input required
                 name="credentials[email]"
                 type="text"
                 placeholder="Enter Email">
-                <input
+                <input required
                 name="credentials[password]"
                 type="password"
                 placeholder="Enter Password">
-                <input
+                <input required
                 name="credentials[password_confirmation]"
                 type="password"
                 placeholder="Confirm Password">
@@ -58,11 +58,11 @@
             </div>
             <div class="modal-body">
               <form id="sign-in">
-                <input
+                <input required
                   placeholder="Enter Email"
                   type="text"
                   name="credentials[email]"/>
-                <input
+                <input required
                   placeholder="Enter Password"
                   type="password"
                   name="credentials[password]"/>
@@ -86,11 +86,11 @@
             </div>
             <div class="modal-body">
               <form id="change-password">
-                <input
+                <input required
                   placeholder="Enter Current Password"
                   type="password"
                   name="passwords[old]"/>
-                <input
+                <input required
                   placeholder="Enter New Password"
                   type="password"
                   name="passwords[new]"/>
@@ -114,27 +114,27 @@
             </div>
             <div class="modal-body">
               <form id="new-character">
-                <input
+                <input required
                   placeholder="First Name"
                   type="text"
                   name="character[firstName]"/>
-                <input
+                <input required
                   placeholder="Last Name"
                   type="text"
                   name="character[lastName]"/>
-                <input
+                <input required
                   placeholder="Hometown/Base"
                   type="text"
                   name="character[homeBase]"/>
-                <input
+                <input required
                   placeholder="Race"
                   type="text"
                   name="character[race]"/>
-                <input
+                <input required
                   placeholder="Age"
                   type="number" min="0" step="1"
                   name="character[age]"/>
-                <input
+                <input required
                   placeholder="Level"
                   type="number" min="0" step="1"
                   name="character[level]"/>
@@ -158,31 +158,31 @@
             </div>
             <div class="modal-body">
               <form id="update-character">
-                <input
+                <input required
                   placeholder="ID"
                   type="string"
                   name="character[_id]"/>
-                <input
+                <input required
                   placeholder="First Name"
                   type="text"
                   name="character[firstName]"/>
-                <input
+                <input required
                   placeholder="Last Name"
                   type="text"
                   name="character[lastName]"/>
-                <input
+                <input required
                   placeholder="Hometown/Base"
                   type="text"
                   name="character[homeBase]"/>
-                <input
+                <input required
                   placeholder="Race"
                   type="text"
                   name="character[race]"/>
-                <input
+                <input required
                   placeholder="Age"
                   type="number" min="0" step="1"
                   name="character[age]"/>
-                <input
+                <input required
                   placeholder="Level"
                   type="number" min="0" step="1"
                   name="character[level]"/>
@@ -206,11 +206,35 @@
             </div>
             <div class="modal-body">
               <form id="delete-character">
-                <input
+                <input required
                   placeholder="ID"
                   type="string"
                   name="character[_id]"/>
                 <button type="submit" class="btn btn-primary">Delete</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="viewCharacterModal" tabindex="-1" aria-labelledby="viewCharacterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="viewCharacterModalLabel">View a Character</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="view-character">
+                <input required
+                  placeholder="ID"
+                  type="string"
+                  name="character[_id]"/>
+                <button type="submit" class="btn btn-primary">View</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -240,6 +264,7 @@
         <h2 id="home-message-authenticated"><p>Let's test this</p></h2>
         <div class="characters-display"></div>
         <button id="characters-index" type="button" class="btn btn-secondary btn-lg btn-block">My Characters</button>
+        <button id="characters-view" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#viewCharacterModal">View a Character</button>
         <button id="characters-new" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#newCharacterModal">New Character</button>
         <button id="characters-update" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#updateCharacterModal">Update Character</button>
         <button id="characters-delete" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#deleteCharacterModal">Delete Character</button>

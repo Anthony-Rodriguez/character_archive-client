@@ -55,6 +55,15 @@ const onIndexCharacters = function (event) {
     .then(ui.onIndexSuccess)
     .catch(ui.onIndexError)
 }
+const onViewCharacter = function (event) {
+  event.preventDefault()
+  const form = event.target
+  const characterData = getFormFields(form)
+
+  api.view(characterData)
+    .then(ui.onViewSuccess)
+    .catch(ui.onViewFailure)
+}
 const onCreateCharacter = function (event) {
   event.preventDefault()
   const form = event.target
@@ -97,5 +106,6 @@ module.exports = {
   onCreateCharacter,
   onDeleteCharacter,
   // onMakeForm
-  onUpdateCharacter
+  onUpdateCharacter,
+  onViewCharacter
 }

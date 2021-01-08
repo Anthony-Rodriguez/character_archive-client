@@ -13,4 +13,5 @@ $(() => {
   $('#new-character').on('submit', authEvents.onCreateCharacter)
   $('#delete-character').on('submit', authEvents.onDeleteCharacter)
   $('#update-character').on('submit', authEvents.onUpdateCharacter)
+  $('#view-character').on('submit', authEvents.onViewCharacter)
 })

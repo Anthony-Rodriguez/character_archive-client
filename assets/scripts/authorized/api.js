@@ -45,6 +45,15 @@ const index = function () {
     }
   })
 }
+const view = function (characterData) {
+  return $.ajax({
+    url: config.apiUrl + '/characters/' + characterData.character._id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
+  })
+}
 const create = function (characterData) {
   return $.ajax({
     url: config.apiUrl + '/characters',
@@ -84,5 +93,6 @@ module.exports = {
   index,
   create,
   destroy,
-  update
+  update,
+  view
 }
