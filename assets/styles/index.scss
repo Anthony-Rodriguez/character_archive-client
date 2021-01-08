@@ -35,6 +35,17 @@ $main-text: 'Pacifico';
   font-family: $main-text, sans-serif;
 }
 
+.characters-display {
+  h5 {
+    margin-top: 5px;
+  }
+
+  p {
+    margin-bottom: 5px;
+    text-align: left;
+  }
+}
+
 p {
   text-align: center;
 }

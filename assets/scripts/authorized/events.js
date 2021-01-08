@@ -2,7 +2,6 @@
 const api = require('./api')
 const getFormFields = require('./../../../lib/get-form-fields')
 const ui = require('./ui')
-// const store = require('./../store')
 
 const onSignUp = function (event) {
   // prevent the page from refreshing
@@ -50,7 +49,6 @@ const onSignOut = function (event) {
     .then(ui.signOutSuccess)
     .catch(ui.signOutFailure)
 }
-
 const onIndexCharacters = function (event) {
   event.preventDefault()
   api.index()
@@ -66,6 +64,21 @@ const onCreateCharacter = function (event) {
     .then(ui.onCreateSuccess)
     .catch(ui.onCreateFailure)
 }
+const onMakeForm = function (event) {
+  event.preventDefault()
+  api.index()
+    .then(ui.makeFormSuccess)
+    .catch(ui.makeFormFailure)
+}
+const onDeleteCharacter = function (event) {
+  event.preventDefault()
+  const form = event.target
+  const characterData = getFormFields(form)
+
+  api.delete(characterData)
+  .then(ui.onDeleteSuccess)
+  .then(ui.onDeleteFailure)
+}
 
 module.exports = {
   onSignUp,
@@ -73,5 +86,7 @@ module.exports = {
   onChangePassword,
   onSignOut,
   onIndexCharacters,
-  onCreateCharacter
+  onCreateCharacter,
+  onDeleteCharacter,
+  onMakeForm
 }
