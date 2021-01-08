@@ -3908,6 +3908,7 @@ var signInSuccess = function signInSuccess(response) {
   $('#signInModalLabel').text('Sign In Below!');
   $('#characters-index').show();
   $('#characters-new').show();
+  $('#characters-view').hide();
   $('#characters-update').hide();
   $('#characters-delete').hide();
   $('#home-button').hide();
@@ -3941,6 +3942,25 @@ var onIndexFailure = function onIndexFailure(error) {
 var onCreateFailure = function onCreateFailure(error) {
   $('#newCharacterModalLabel').text(error.responseJSON.message);
 };
+var onViewFailure = function onViewFailure(error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#viewCharacterModalLabel').text('That is not a valid ID');
+  } else {
+    $('#viewCharacterModalLabel').text(error.responseJSON.message);
+  }
+};
+var onViewSuccess = function onViewSuccess(responseData) {
+  var character = responseData.character;
+  var characterHTML = '\n    <div>\n      <h4>Name: ' + character.firstName + ' ' + character.lastName + '</h4>\n      <h5>Level: ' + character.level + '</h5>\n      <p>Race: ' + character.race + '</p>\n      <p>Age: ' + character.age + '</p>\n      <p>Home: ' + character.homeBase + '</p>\n      <p>ID: ' + character._id + '</p>\n      <hr>\n    </div>\n    ';
+  $('.characters-display').html(characterHTML);
+  $('#viewCharacterModalLabel').text('Success');
+  $('form').trigger('reset');
+  $('#home-message-authenticated').html('<p>Your Character</p><hr>');
+  $('#characters-index').show();
+  $('#characters-new').show();
+  $('#characters-update').show();
+  $('#characters-delete').show();
+};
 var onIndexSuccess = function onIndexSuccess(responseData) {
   // assign the array of character objects to a const
   var characters = responseData.character;
@@ -3962,6 +3982,7 @@ var onIndexSuccess = function onIndexSuccess(responseData) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('#characters-new').show();
+  $('#characters-view').show();
   $('#home-button').show();
 };
 var onCreateSuccess = function onCreateSuccess(responseData) {
@@ -4002,9 +4023,7 @@ var onDeleteSuccess = function onDeleteSuccess() {
   $('form').trigger('reset');
 };
 var onDeleteFailure = function onDeleteFailure(error) {
-  if (error.responseJSON === undefined) {
-    $('#deleteCharacterModalLabel').text('Please insert a valid ID');
-  } else if (error.statusText === 'Unprocessable Entity') {
+  if (error.statusText === 'Unprocessable Entity') {
     $('#deleteCharacterModalLabel').text('That is not a valid ID');
   } else {
     $('#deleteCharacterModalLabel').text(error.responseJSON.message);
@@ -4024,9 +4043,7 @@ var onUpdateSuccess = function onUpdateSuccess(characterData) {
   $('#characters-delete').show();
 };
 var onUpdateFailure = function onUpdateFailure(error) {
-  if (error.responseJSON === undefined) {
-    $('#updateCharacterModalLabel').text('Please insert a valid ID');
-  } else if (error.statusText === 'Unprocessable Entity') {
+  if (error.statusText === 'Unprocessable Entity') {
     $('#updateCharacterModalLabel').text('That is not a valid ID');
   } else {
     $('#updateCharacterModalLabel').text(error.responseJSON.message);
@@ -4052,7 +4069,9 @@ module.exports = {
   onDeleteSuccess: onDeleteSuccess,
   onDeleteFailure: onDeleteFailure,
   onUpdateSuccess: onUpdateSuccess,
-  onUpdateFailure: onUpdateFailure
+  onUpdateFailure: onUpdateFailure,
+  onViewFailure: onViewFailure,
+  onViewSuccess: onViewSuccess
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)))
 
@@ -16711,6 +16730,7 @@ $(function () {
   $('#new-character').on('submit', authEvents.onCreateCharacter);
   $('#delete-character').on('submit', authEvents.onDeleteCharacter);
   $('#update-character').on('submit', authEvents.onUpdateCharacter);
+  $('#view-character').on('submit', authEvents.onViewCharacter);
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)))
 
@@ -16771,6 +16791,13 @@ var onIndexCharacters = function onIndexCharacters(event) {
   event.preventDefault();
   api.index().then(ui.onIndexSuccess).catch(ui.onIndexError);
 };
+var onViewCharacter = function onViewCharacter(event) {
+  event.preventDefault();
+  var form = event.target;
+  var characterData = getFormFields(form);
+
+  api.view(characterData).then(ui.onViewSuccess).catch(ui.onViewFailure);
+};
 var onCreateCharacter = function onCreateCharacter(event) {
   event.preventDefault();
   var form = event.target;
@@ -16807,7 +16834,8 @@ module.exports = {
   onCreateCharacter: onCreateCharacter,
   onDeleteCharacter: onDeleteCharacter,
   // onMakeForm
-  onUpdateCharacter: onUpdateCharacter
+  onUpdateCharacter: onUpdateCharacter,
+  onViewCharacter: onViewCharacter
 };
 
 /***/ }),
@@ -16863,6 +16891,15 @@ var index = function index() {
     }
   });
 };
+var view = function view(characterData) {
+  return $.ajax({
+    url: config.apiUrl + '/characters/' + characterData.character._id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
+  });
+};
 var create = function create(characterData) {
   return $.ajax({
     url: config.apiUrl + '/characters',
@@ -16902,7 +16939,8 @@ module.exports = {
   index: index,
   create: create,
   destroy: destroy,
-  update: update
+  update: update,
+  view: view
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)))
 
