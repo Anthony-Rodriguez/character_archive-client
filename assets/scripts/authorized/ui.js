@@ -28,8 +28,8 @@ const signInSuccess = function (response) {
   $('#signInModalLabel').text('Sign In Below!')
   $('#characters-index').show()
   $('#characters-new').show()
-  $('#characters-update').show()
-  $('#characters-delete').show()
+  $('#characters-update').hide()
+  $('#characters-delete').hide()
   $('#home-button').hide()
 }
 const changePasswordSuccess = function (response) {
@@ -51,14 +51,14 @@ const onHomeSuccess = function () {
   $('.characters-display').html('')
   $('#characters-index').show()
   $('#characters-new').show()
-  $('#characters-update').show()
-  $('#characters-delete').show()
   $('#home-button').hide()
+  $('#characters-update').hide()
+  $('#characters-delete').hide()
 }
-const onIndexFailure = function () {
+const onIndexFailure = function (error) {
   $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
 }
-const onCreateFailure = function () {
+const onCreateFailure = function (error) {
   $('#newCharacterModalLabel').text(error.responseJSON.message)
 }
 const onIndexSuccess = function (responseData) {
@@ -78,6 +78,7 @@ const onIndexSuccess = function (responseData) {
         <p>Race: ${currentCharacter.race}</p>
         <p>Age: ${currentCharacter.age}</p>
         <p>Home: ${currentCharacter.homeBase}</p>
+        <p>ID: ${currentCharacter._id}</p>
         <hr>
       </div>
       `)
@@ -88,9 +89,9 @@ const onIndexSuccess = function (responseData) {
   $('.characters-display').html(charactersHTML)
   $('#home-message-authenticated').html('<p>Your Characters</p><hr>')
   $('#characters-index').hide()
-  $('#characters-new').hide()
-  $('#characters-update').hide()
-  $('#characters-delete').hide()
+  $('#characters-update').show()
+  $('#characters-delete').show()
+  $('#characters-new').show()
   $('#home-button').show()
 }
 const onCreateSuccess = function (responseData) {
@@ -103,34 +104,86 @@ const onCreateSuccess = function (responseData) {
       <p>Race: ${character.race}</p>
       <p>Age: ${character.age}</p>
       <p>Home: ${character.homeBase}</p>
+      <p>ID: ${character._id}</p>
       <hr>
     </div>
     `)
-  $('#newCharacterModalLabel').text("Character Created Successfully")
+  $('#newCharacterModalLabel').text('Character Created Successfully')
   $('#home-message-authenticated').html('<p>Your New Character</p><hr>')
   $('.characters-display').html(characterHTML)
   $('form').trigger('reset')
+  $('#characters-index').show()
+  $('#characters-new').show()
+  $('#characters-update').show()
+  $('#characters-delete').show()
 }
-const onMakeFormSuccess = function (responseData) {
-  // assign the array of character objects to a const
-  console.log(responseData)
-  const characters = responseData.character
-  // declare empty HTML string to fill in later
-  let charactersHTML = ''
-  // for each character in the array, generate HTML
-  characters.forEach(function (currentCharacter) {
-  // this time we only want the name and level of the character
-  // we'll add the _id as the value so we can target it later
-  const currentCharacterHTML = (`
-    <option value="${currentCharacter._id}">${currentCharacter.firstName}
-     ${currentCharacter.lastName} Level: ${currentCharacter.level}
-    </option>
+// const onMakeFormSuccess = function (responseData) {
+//   // assign the array of character objects to a const
+//   console.log(responseData)
+//   const characters = responseData.character
+//   // declare empty HTML string to fill in later
+//   let charactersHTML = ''
+//   // for each character in the array, generate HTML
+//   characters.forEach(function (currentCharacter) {
+//   // this time we only want the name and level of the character
+//   // we'll add the _id as the value so we can target it later
+//   const currentCharacterHTML = (`
+//     <option value="${currentCharacter._id}">${currentCharacter.firstName}
+//      ${currentCharacter.lastName} Level: ${currentCharacter.level}
+//     </option>
+//     `)
+//   // add the HTML for each character into the empty string
+//   charactersHTML += currentCharacterHTML
+// })
+//   $('.custom-select').html(charactersHTML)
+// }
+const onDeleteSuccess = function () {
+  $('#deleteCharacterModalLabel').text('May they rest in peace.')
+  $('form').trigger('reset')
+}
+const onDeleteFailure = function (error) {
+  if (error.responseJSON === undefined) {
+    $('#deleteCharacterModalLabel').text('Please insert a valid ID')
+  } else if (error.statusText === 'Unprocessable Entity') {
+    $('#deleteCharacterModalLabel').text('That is not a valid ID')
+  } else {
+    $('#deleteCharacterModalLabel').text(error.responseJSON.message)
+  }
+}
+const onUpdateSuccess = function (characterData) {
+  const character = characterData.character
+  // basically the same as CREATE
+  const characterHTML = (`
+    <div>
+      <h4>Name: ${character.firstName} ${character.lastName}</h4>
+      <h5>Level: ${character.level}</h5>
+      <p>Race: ${character.race}</p>
+      <p>Age: ${character.age}</p>
+      <p>Home: ${character.homeBase}</p>
+      <p>ID: ${character._id}</p>
+      <hr>
+    </div>
     `)
-  // add the HTML for each character into the empty string
-  charactersHTML += currentCharacterHTML
-})
-  $('.custom-select').html(charactersHTML)
+  $('.characters-display').html(characterHTML)
+  $('#updateCharacterModalLabel').text('Updated Successfully')
+  $('form').trigger('reset')
+  $('#home-message-authenticated').html('<p>Your Updated Character</p><hr>')
+  $('#characters-index').show()
+  $('#characters-new').show()
+  $('#characters-update').show()
+  $('#characters-delete').show()
 }
+const onUpdateFailure = function (error) {
+  if (error.responseJSON === undefined) {
+    $('#updateCharacterModalLabel').text('Please insert a valid ID')
+  } else if (error.statusText === 'Unprocessable Entity') {
+    $('#updateCharacterModalLabel').text('That is not a valid ID')
+  } else {
+    $('#updateCharacterModalLabel').text(error.responseJSON.message)
+  }
+  $('#home-message-authenticated').html('<p>You tried...</p><hr>')
+}
+
 module.exports = {
   signOutFailure,
   signUpSuccess,
@@ -145,5 +198,9 @@ module.exports = {
   onIndexFailure,
   onCreateSuccess,
   onCreateFailure,
-  onMakeFormSuccess
+  // onMakeFormSuccess
+  onDeleteSuccess,
+  onDeleteFailure,
+  onUpdateSuccess,
+  onUpdateFailure
 }

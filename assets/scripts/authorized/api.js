@@ -47,12 +47,32 @@ const index = function () {
 }
 const create = function (characterData) {
   return $.ajax({
-  url: config.apiUrl + '/characters',
-  method: 'POST',
-  headers: {
-    Authorization: 'Bearer ' + store.user.token
-  },
-  data: characterData
+    url: config.apiUrl + '/characters',
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    },
+    data: characterData
+  })
+}
+const destroy = function (formData) {
+  const id = formData.character._id
+  return $.ajax({
+    url: config.apiUrl + '/characters/' + id,
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
+  })
+}
+const update = function (characterData) {
+  return $.ajax({
+    url: config.apiUrl + '/characters/' + characterData.character._id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    },
+    data: characterData
   })
 }
 
@@ -62,5 +82,7 @@ module.exports = {
   changePassword,
   signOut,
   index,
-  create
+  create,
+  destroy,
+  update
 }

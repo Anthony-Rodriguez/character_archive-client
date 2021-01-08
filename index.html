@@ -147,6 +147,54 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="updateCharacterModal" tabindex="-1" aria-labelledby="updateCharacterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateCharacterModalLabel">Who are you changing?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="update-character">
+                <input
+                  placeholder="ID"
+                  type="string"
+                  name="character[_id]"/>
+                <input
+                  placeholder="First Name"
+                  type="text"
+                  name="character[firstName]"/>
+                <input
+                  placeholder="Last Name"
+                  type="text"
+                  name="character[lastName]"/>
+                <input
+                  placeholder="Hometown/Base"
+                  type="text"
+                  name="character[homeBase]"/>
+                <input
+                  placeholder="Race"
+                  type="text"
+                  name="character[race]"/>
+                <input
+                  placeholder="Age"
+                  type="number"
+                  name="character[age]"/>
+                <input
+                  placeholder="Level"
+                  type="number"
+                  name="character[level]"/>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal fade" id="deleteCharacterModal" tabindex="-1" aria-labelledby="deleteCharacterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -158,10 +206,10 @@
             </div>
             <div class="modal-body">
               <form id="delete-character">
-                <select id="delete-drop-down" class="custom-select">
-                  <option selected>Choose your Character</option>
-                  <option value="null">Test</option>
-                </select>
+                <input
+                  placeholder="ID"
+                  type="string"
+                  name="character[_id]"/>
                 <button type="submit" class="btn btn-primary">Delete</button>
               </form>
             </div>
@@ -193,7 +241,7 @@
         <div class="characters-display"></div>
         <button id="characters-index" type="button" class="btn btn-secondary btn-lg btn-block">My Characters</button>
         <button id="characters-new" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#newCharacterModal">New Character</button>
-        <button id="characters-update" type="button" class="btn btn-secondary btn-lg btn-block">Update Character</button>
+        <button id="characters-update" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#updateCharacterModal">Update Character</button>
         <button id="characters-delete" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#deleteCharacterModal">Delete Character</button>
         <button id="home-button" type="button" class="btn btn-secondary btn-lg btn-block">Home</button>
       </div>

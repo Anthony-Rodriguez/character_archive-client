@@ -1,11 +1,6 @@
 'use strict'
 const authEvents = require('./authorized/events')
-const ui = require ('./authorized/ui')
-// use require with a reference to bundle the file and use it in this file
-// const example = require('./example')
-
-// use require without a reference to ensure a file is bundled
-// require('./example')
+const ui = require('./authorized/ui')
 
 $(() => {
   $('.authenticated').hide()
@@ -17,5 +12,5 @@ $(() => {
   $('#home-button').on('click', ui.onHomeSuccess)
   $('#new-character').on('submit', authEvents.onCreateCharacter)
   $('#delete-character').on('submit', authEvents.onDeleteCharacter)
-  $('#characters-delete').on('click', authEvents.onMakeForm)
+  $('#update-character').on('submit', authEvents.onUpdateCharacter)
 })
