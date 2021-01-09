@@ -55,6 +55,7 @@ const onHomeSuccess = function () {
   $('#home-button').hide()
   $('#characters-update').hide()
   $('#characters-delete').hide()
+  $('#characters-view').hide()
 }
 const onIndexFailure = function (error) {
   $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
@@ -147,6 +148,7 @@ const onCreateSuccess = function (responseData) {
   $('#characters-new').show()
   $('#characters-update').show()
   $('#characters-delete').show()
+  $('.close').trigger('click')
 }
 // const onMakeFormSuccess = function (responseData) {
 //   // assign the array of character objects to a const
@@ -196,6 +198,7 @@ const onUpdateSuccess = function (characterData) {
   $('.characters-display').html(characterHTML)
   $('#updateCharacterModalLabel').text('Updated Successfully')
   $('form').trigger('reset')
+  $('.close').trigger('click')
   $('#home-message-authenticated').html('<p>Your Updated Character</p><hr>')
   $('#characters-index').show()
   $('#characters-new').show()
