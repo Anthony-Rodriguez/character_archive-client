@@ -3881,6 +3881,16 @@ module.exports = store;
 
 var store = __webpack_require__(131);
 
+var modalReset = function modalReset() {
+  $('#deleteCharacterModalLabel').text('Delete a Character');
+  $('#viewCharacterModalLabel').text('View a Character');
+  $('#updateCharacterModalLabel').text('Who are you changing?');
+  $('#newCharacterModalLabel').text('Who are you making?');
+  $('#changePasswordModalLabel').text('Change Password');
+  $('#signUpModalLabel').text('Sign Up Below');
+  $('#signInModalLabel').text('Sign In Below');
+};
+
 var signOutFailure = function signOutFailure(error) {
   $('#home-message-authenticated').html('<p>' + error.responseJSON.message + '</p>');
 };
@@ -3922,8 +3932,8 @@ var signOutSuccess = function signOutSuccess() {
   $('form').trigger('reset');
   $('.unauthenticated').show();
   $('.authenticated').hide();
-  $('#message').hide();
   $('.characters-display').html('');
+  modalReset();
 };
 var onHomeSuccess = function onHomeSuccess() {
   $('#home-message-authenticated').html('<p>Welcome to your Archive</p>');
@@ -3936,6 +3946,7 @@ var onHomeSuccess = function onHomeSuccess() {
   $('#characters-update').hide();
   $('#characters-delete').hide();
   $('#characters-view').hide();
+  modalReset();
 };
 var onIndexFailure = function onIndexFailure(error) {
   $('#home-message-authenticated').html('<p>' + error.responseJSON.message + '</p>');
@@ -3961,6 +3972,8 @@ var onViewSuccess = function onViewSuccess(responseData) {
   $('#characters-new').show();
   $('#characters-update').show();
   $('#characters-delete').show();
+  $('.close').trigger('click');
+  modalReset();
 };
 var onIndexSuccess = function onIndexSuccess(responseData) {
   // assign the array of character objects to a const
@@ -3985,6 +3998,7 @@ var onIndexSuccess = function onIndexSuccess(responseData) {
   $('#characters-new').show();
   $('#characters-view').show();
   $('#home-button').show();
+  modalReset();
 };
 var onCreateSuccess = function onCreateSuccess(responseData) {
   var character = responseData.character;
@@ -3999,10 +4013,21 @@ var onCreateSuccess = function onCreateSuccess(responseData) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('.close').trigger('click');
+  modalReset();
 };
-var onDeleteSuccess = function onDeleteSuccess() {
+var onDeleteSuccess = function onDeleteSuccess(response) {
+  var character = response.character;
+  var characterHTML = '\n    <div>\n      <h4>Name: ' + character.firstName + ' ' + character.lastName + '</h4>\n      <h5>Level: ' + character.level + '</h5>\n      <p>Race: ' + character.race + '</p>\n      <p>Age: ' + character.age + '</p>\n      <p>Home: ' + character.homeBase + '</p>\n      <p>ID: ' + character._id + '</p>\n      <hr>\n    </div>\n    ';
   $('#deleteCharacterModalLabel').text('May they rest in peace.');
   $('form').trigger('reset');
+  $('.characters-display').html(characterHTML);
+  $('#home-message-authenticated').html('<p>Rest in Peace</p><hr>');
+  $('#characters-index').show();
+  $('#characters-new').show();
+  $('#characters-update').show();
+  $('#characters-delete').show();
+  $('.close').trigger('click');
+  modalReset();
 };
 var onDeleteFailure = function onDeleteFailure(error) {
   if (error.statusText === 'Unprocessable Entity') {
@@ -4024,6 +4049,7 @@ var onUpdateSuccess = function onUpdateSuccess(characterData) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('.close').trigger('click');
+  modalReset();
 };
 var onUpdateFailure = function onUpdateFailure(error) {
   if (error.statusText === 'Unprocessable Entity') {
@@ -16703,6 +16729,9 @@ var authEvents = __webpack_require__(339);
 var ui = __webpack_require__(132);
 
 $(function () {
+  $('.modal').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+  });
   $('.authenticated').hide();
   $('#sign-up').on('submit', authEvents.onSignUp);
   $('#sign-in').on('submit', authEvents.onSignIn);
@@ -16794,18 +16823,27 @@ var onDeleteCharacter = function onDeleteCharacter(event) {
   event.preventDefault();
   var form = event.target;
   var characterData = getFormFields(form);
+  var response = void 0;
 
-  api.destroy(characterData).then(ui.onDeleteSuccess).catch(ui.onDeleteFailure);
+  api.view(characterData).then(function (responseData) {
+    return response = responseData;
+  }).then(function () {
+    return api.destroy(characterData);
+  }).then(function () {
+    return ui.onDeleteSuccess(response);
+  }).catch(ui.onDeleteFailure);
 };
 var onUpdateCharacter = function onUpdateCharacter(event) {
   event.preventDefault();
   var form = event.target;
   var characterData = getFormFields(form);
 
-  api.update(characterData).then(function (characterData) {
+  api.update(characterData);
+  console.log(characterData).then(function () {
     return ui.onUpdateSuccess(characterData);
   }).catch(ui.onUpdateFailure);
 };
+
 module.exports = {
   onSignUp: onSignUp,
   onSignIn: onSignIn,
