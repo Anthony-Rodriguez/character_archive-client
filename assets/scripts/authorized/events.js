@@ -91,7 +91,6 @@ const onUpdateCharacter = function (event) {
   const characterData = getFormFields(form)
 
   api.update(characterData)
-  console.log(characterData)
     .then(() => ui.onUpdateSuccess(characterData))
     .catch(ui.onUpdateFailure)
 }
