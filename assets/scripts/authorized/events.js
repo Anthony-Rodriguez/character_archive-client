@@ -70,15 +70,9 @@ const onCreateCharacter = function (event) {
   const characterData = getFormFields(form)
 
   api.create(characterData)
-    .then(ui.onCreateSuccess)
+    .then((characterData) => ui.onCreateSuccess(characterData))
     .catch(ui.onCreateFailure)
 }
-// const onMakeForm = function (event) {
-//   event.preventDefault()
-//   api.index()
-//     .then(ui.makeFormSuccess)
-//     .catch(ui.makeFormFailure)
-// }
 const onDeleteCharacter = function (event) {
   event.preventDefault()
   const form = event.target
@@ -94,7 +88,7 @@ const onUpdateCharacter = function (event) {
   const characterData = getFormFields(form)
 
   api.update(characterData)
-    .then(ui.onUpdateSuccess(characterData))
+    .then((characterData) => ui.onUpdateSuccess(characterData))
     .catch(ui.onUpdateFailure)
 }
 module.exports = {
@@ -105,7 +99,6 @@ module.exports = {
   onIndexCharacters,
   onCreateCharacter,
   onDeleteCharacter,
-  // onMakeForm
   onUpdateCharacter,
   onViewCharacter
 }

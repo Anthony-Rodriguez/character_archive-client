@@ -150,26 +150,6 @@ const onCreateSuccess = function (responseData) {
   $('#characters-delete').show()
   $('.close').trigger('click')
 }
-// const onMakeFormSuccess = function (responseData) {
-//   // assign the array of character objects to a const
-//   console.log(responseData)
-//   const characters = responseData.character
-//   // declare empty HTML string to fill in later
-//   let charactersHTML = ''
-//   // for each character in the array, generate HTML
-//   characters.forEach(function (currentCharacter) {
-//   // this time we only want the name and level of the character
-//   // we'll add the _id as the value so we can target it later
-//   const currentCharacterHTML = (`
-//     <option value="${currentCharacter._id}">${currentCharacter.firstName}
-//      ${currentCharacter.lastName} Level: ${currentCharacter.level}
-//     </option>
-//     `)
-//   // add the HTML for each character into the empty string
-//   charactersHTML += currentCharacterHTML
-// })
-//   $('.custom-select').html(charactersHTML)
-// }
 const onDeleteSuccess = function () {
   $('#deleteCharacterModalLabel').text('May they rest in peace.')
   $('form').trigger('reset')
@@ -198,12 +178,12 @@ const onUpdateSuccess = function (characterData) {
   $('.characters-display').html(characterHTML)
   $('#updateCharacterModalLabel').text('Updated Successfully')
   $('form').trigger('reset')
-  $('.close').trigger('click')
   $('#home-message-authenticated').html('<p>Your Updated Character</p><hr>')
   $('#characters-index').show()
   $('#characters-new').show()
   $('#characters-update').show()
   $('#characters-delete').show()
+  $('.close').trigger('click')
 }
 const onUpdateFailure = function (error) {
   if (error.statusText === 'Unprocessable Entity') {
@@ -211,7 +191,7 @@ const onUpdateFailure = function (error) {
   } else {
     $('#updateCharacterModalLabel').text(error.responseJSON.message)
   }
-  $('#home-message-authenticated').html('<p>You tried...</p><hr>')
+  $('#home-message-authenticated').html('<p>At least you tried.</p><hr>')
 }
 
 module.exports = {
