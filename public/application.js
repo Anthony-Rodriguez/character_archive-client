@@ -16838,8 +16838,7 @@ var onUpdateCharacter = function onUpdateCharacter(event) {
   var form = event.target;
   var characterData = getFormFields(form);
 
-  api.update(characterData);
-  console.log(characterData).then(function () {
+  api.update(characterData).then(function () {
     return ui.onUpdateSuccess(characterData);
   }).catch(ui.onUpdateFailure);
 };
