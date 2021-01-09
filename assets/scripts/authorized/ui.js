@@ -1,6 +1,16 @@
 'use strict'
 const store = require('./../store')
 
+const modalReset = ()=> {
+  $('#deleteCharacterModalLabel').text('Delete a Character')
+  $('#viewCharacterModalLabel').text('View a Character')
+  $('#updateCharacterModalLabel').text('Who are you changing?')
+  $('#newCharacterModalLabel').text('Who are you making?')
+  $('#changePasswordModalLabel').text('Change Password')
+  $('#signUpModalLabel').text('Sign Up Below')
+  $('#signInModalLabel').text('Sign In Below')
+  }
+
 const signOutFailure = function (error) {
   $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
 }
@@ -42,8 +52,8 @@ const signOutSuccess = function () {
   $('form').trigger('reset')
   $('.unauthenticated').show()
   $('.authenticated').hide()
-  $('#message').hide()
   $('.characters-display').html('')
+  modalReset()
 }
 const onHomeSuccess = function () {
   $('#home-message-authenticated').html('<p>Welcome to your Archive</p>')
@@ -56,6 +66,7 @@ const onHomeSuccess = function () {
   $('#characters-update').hide()
   $('#characters-delete').hide()
   $('#characters-view').hide()
+  modalReset()
 }
 const onIndexFailure = function (error) {
   $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
@@ -91,6 +102,8 @@ const onViewSuccess = function (responseData) {
   $('#characters-new').show()
   $('#characters-update').show()
   $('#characters-delete').show()
+  $('.close').trigger('click')
+  modalReset()
 }
 const onIndexSuccess = function (responseData) {
   // assign the array of character objects to a const
@@ -125,6 +138,7 @@ const onIndexSuccess = function (responseData) {
   $('#characters-new').show()
   $('#characters-view').show()
   $('#home-button').show()
+  modalReset()
 }
 const onCreateSuccess = function (responseData) {
   const character = responseData.character
@@ -149,10 +163,31 @@ const onCreateSuccess = function (responseData) {
   $('#characters-update').show()
   $('#characters-delete').show()
   $('.close').trigger('click')
+  modalReset()
 }
-const onDeleteSuccess = function () {
+const onDeleteSuccess = function (response) {
+  const character = response.character
+  const characterHTML = (`
+    <div>
+      <h4>Name: ${character.firstName} ${character.lastName}</h4>
+      <h5>Level: ${character.level}</h5>
+      <p>Race: ${character.race}</p>
+      <p>Age: ${character.age}</p>
+      <p>Home: ${character.homeBase}</p>
+      <p>ID: ${character._id}</p>
+      <hr>
+    </div>
+    `)
   $('#deleteCharacterModalLabel').text('May they rest in peace.')
   $('form').trigger('reset')
+  $('.characters-display').html(characterHTML)
+  $('#home-message-authenticated').html('<p>Rest in Peace</p><hr>')
+  $('#characters-index').show()
+  $('#characters-new').show()
+  $('#characters-update').show()
+  $('#characters-delete').show()
+  $('.close').trigger('click')
+  modalReset()
 }
 const onDeleteFailure = function (error) {
   if (error.statusText === 'Unprocessable Entity') {
@@ -184,6 +219,7 @@ const onUpdateSuccess = function (characterData) {
   $('#characters-update').show()
   $('#characters-delete').show()
   $('.close').trigger('click')
+  modalReset()
 }
 const onUpdateFailure = function (error) {
   if (error.statusText === 'Unprocessable Entity') {

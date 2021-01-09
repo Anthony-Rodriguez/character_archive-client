@@ -77,9 +77,12 @@ const onDeleteCharacter = function (event) {
   event.preventDefault()
   const form = event.target
   const characterData = getFormFields(form)
+  let response
 
-  api.destroy(characterData)
-    .then(ui.onDeleteSuccess)
+  api.view(characterData)
+    .then((responseData)=> response = responseData)
+    .then(()=> api.destroy(characterData))
+    .then(() => ui.onDeleteSuccess(response))
     .catch(ui.onDeleteFailure)
 }
 const onUpdateCharacter = function (event) {
@@ -88,9 +91,11 @@ const onUpdateCharacter = function (event) {
   const characterData = getFormFields(form)
 
   api.update(characterData)
-    .then((characterData) => ui.onUpdateSuccess(characterData))
+  console.log(characterData)
+    .then(() => ui.onUpdateSuccess(characterData))
     .catch(ui.onUpdateFailure)
 }
+
 module.exports = {
   onSignUp,
   onSignIn,

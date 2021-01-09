@@ -3,6 +3,9 @@ const authEvents = require('./authorized/events')
 const ui = require('./authorized/ui')
 
 $(() => {
+  $('.modal').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset')
+  })
   $('.authenticated').hide()
   $('#sign-up').on('submit', authEvents.onSignUp)
   $('#sign-in').on('submit', authEvents.onSignIn)
