@@ -4,6 +4,16 @@
   .unauthenticated {
     margin-left: 5%;
     margin-right: 5%;
+
+    .container {
+
+      button {
+        font-size: 2.5rem;
+        margin-bottom: 5%;
+        margin-top: 5%;
+        padding-bottom: 4%;
+      }
+    }
   }
 
   .authenticated {
@@ -13,10 +23,43 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .unauthenticated {
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+
+    .container {
+
+      button {
+        font-size: 4rem;
+        margin-bottom: 3%;
+        margin-top: 3%;
+        padding-bottom: 3.5%;
+      }
+    }
+  }
+
+  .authenticated {
+    align-content: center;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+
+@media (min-width: 1124px) {
+  .unauthenticated {
+    margin-left: 25%;
+    margin-right: 25%;
+
+    .container {
+
+      button {
+        font-size: 5rem;
+        margin-bottom: 2%;
+        margin-top: 2%;
+        padding-bottom: 3%;
+      }
+    }
   }
 
   .authenticated {
@@ -26,13 +69,22 @@
   }
 }
 
+$unauth-border-color: #4020c2;
 $background-color: #dee2e6;
+$unauth-text-color: #20a2d2;
 $text-color: #4a4a4a;
 $main-text: 'Pacifico';
+$gradient-one: #20a2d2;
+$gradient-two: #c82323;
 
 * {
   color: $text-color;
   font-family: $main-text, sans-serif;
+}
+
+html {
+  height: 100%;
+  overflow: auto;
 }
 
 .characters-display {
@@ -52,4 +104,32 @@ p {
 
 body {
   background-color: $background-color;
+  height: 100%;
+}
+
+.unauthenticated {
+  overflow: auto;
+
+  .container {
+    background-image: linear-gradient($gradient-one, $gradient-two);
+    border: 5px solid $unauth-border-color;
+    border-radius: 30px;
+    margin-bottom: 25%;
+    margin-top: 25%;
+    overflow: auto;
+    padding-top: 5%;
+
+
+    button {
+      border-radius: 30px;
+      display: block;
+      }
+
+    p {
+      color: $unauth-text-color;
+      padding-bottom: 5px;
+      padding-top: 5px;
+
+    }
+  }
 }
