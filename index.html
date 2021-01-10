@@ -38,7 +38,7 @@
                 name="credentials[password_confirmation]"
                 type="password"
                 placeholder="Confirm Password">
-                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <button type="submit" class="btn btn-info">Sign Up</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -66,7 +66,7 @@
                   placeholder="Enter Password"
                   type="password"
                   name="credentials[password]"/>
-                <button type="submit" class="btn btn-primary">Sign In</button>
+                <button type="submit" class="btn btn-info">Sign In</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -138,7 +138,7 @@
                   placeholder="Level"
                   type="number" min="0" step="1"
                   name="character[level]"/>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-info">Create</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -186,7 +186,7 @@
                   placeholder="Level"
                   type="number" min="0" step="1"
                   name="character[level]"/>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-info">Update</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -210,7 +210,7 @@
                   placeholder="ID"
                   type="string"
                   name="character[_id]"/>
-                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="submit" class="btn btn-info">Delete</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -234,7 +234,7 @@
                   placeholder="ID"
                   type="string"
                   name="character[_id]"/>
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-info">View</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -255,20 +255,20 @@
         </div>
       </div>
       <div class="authenticated">
-        <nav class="navbar navbar-dark bg-dark justify-content-sm-center justify-content-lg-end">
-          <button id="sign-out" class="btn btn-dark btn-outline-light col-lg-2 col-sm-4 mr-1">Sign Out</button>
-          <button type="button" class="btn btn-dark btn-outline-light col-lg-2 col-sm-4 mr-1" data-toggle="modal" data-target="#changePasswordModal">
+        <nav class="navbar navbar-dark bg-info justify-content-sm-center justify-content-lg-end">
+          <button id="sign-out" class="btn btn-info btn-outline-light col-lg-2 col-sm-4 mr-1">Sign Out</button>
+          <button type="button" class="btn btn-info btn-outline-light col-lg-2 col-sm-4 mr-1" data-toggle="modal" data-target="#changePasswordModal">
             Change Password
           </button>
         </nav>
         <h2 id="home-message-authenticated"><p>Let's test this</p></h2>
         <div class="characters-display"></div>
-        <button id="characters-index" type="button" class="btn btn-secondary btn-lg btn-block">My Characters</button>
-        <button id="characters-view" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#viewCharacterModal">View a Character</button>
-        <button id="characters-new" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#newCharacterModal">New Character</button>
-        <button id="characters-update" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#updateCharacterModal">Update Character</button>
-        <button id="characters-delete" type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#deleteCharacterModal">Delete Character</button>
-        <button id="home-button" type="button" class="btn btn-secondary btn-lg btn-block">Home</button>
+        <button id="characters-index" type="button" class="btn btn-info btn-lg btn-block">My Characters</button>
+        <button id="characters-view" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#viewCharacterModal">View a Character</button>
+        <button id="characters-new" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#newCharacterModal">New Character</button>
+        <button id="characters-update" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#updateCharacterModal">Update Character</button>
+        <button id="characters-delete" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#deleteCharacterModal">Delete Character</button>
+        <button id="home-button" type="button" class="btn btn-info btn-lg btn-block">Home</button>
       </div>
     </body>
 </html>

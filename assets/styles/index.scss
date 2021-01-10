@@ -68,11 +68,11 @@
     margin-right: 15%;
   }
 }
-
 $unauth-border-color: #4020c2;
-$background-color: #dee2e6;
+$auth-background-color: #ededed;
+$background-color: #fff;
 $unauth-text-color: #20a2d2;
-$text-color: #4a4a4a;
+$text-color: #6f34ff;
 $main-text: 'Pacifico';
 $gradient-one: #20a2d2;
 $gradient-two: #c82323;
@@ -85,9 +85,12 @@ $gradient-two: #c82323;
 html {
   height: 100%;
   overflow: auto;
+  overflow-y: scroll;
 }
 
 .characters-display {
+  background-color: $auth-background-color;
+
   h5 {
     margin-top: 5px;
   }
@@ -99,6 +102,7 @@ html {
 }
 
 p {
+  margin-top: 5px;
   text-align: center;
 }
 
