@@ -6,6 +6,9 @@ $(() => {
   $('.modal').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset')
   })
+  $('.modal').on('hidden.bs.modal', function () {
+    ui.modalReset()
+  })
   $('.authenticated').hide()
   $('#sign-up').on('submit', authEvents.onSignUp)
   $('#sign-in').on('submit', authEvents.onSignIn)

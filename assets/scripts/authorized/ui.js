@@ -2,40 +2,69 @@
 const store = require('./../store')
 
 const modalReset = ()=> {
-  $('#deleteCharacterModalLabel').text('Delete a Character')
-  $('#viewCharacterModalLabel').text('View a Character')
-  $('#updateCharacterModalLabel').text('Who are you changing?')
-  $('#newCharacterModalLabel').text('Who are you making?')
-  $('#changePasswordModalLabel').text('Change Password')
-  $('#signUpModalLabel').text('Sign Up Below')
-  $('#signInModalLabel').text('Sign In Below')
+  $('#deleteCharacterModalLabel').css('color', '').text('Delete a Character')
+  $('#viewCharacterModalLabel').css('color', '').text('View a Character')
+  $('#updateCharacterModalLabel').css('color', '').text('Who are you changing?')
+  $('#newCharacterModalLabel').css('color', '').text('Who are you making?')
+  $('#changePasswordModalLabel').css('color', '').text('Change Password')
+  $('#signUpModalLabel').css('color', '').text('Sign Up Below')
+  $('#signInModalLabel').css('color', '').text('Sign In Below')
   }
 
 const signOutFailure = function (error) {
   $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
 }
 const signUpFailure = function (error) {
-  $('#signUpModalLabel').text(error.responseJSON.message)
+  $('#signUpModalLabel').css('color', 'red').text(error.responseJSON.message)
 }
 const signInFailure = function (error) {
-  $('#signInModalLabel').text(error.responseJSON.message)
+  $('#signInModalLabel').css('color', 'red').text(error.responseJSON.message)
 }
 const changePasswordFailure = function (error) {
-  $('#changePasswordModalLabel').text(error.responseJSON.message)
+  $('#changePasswordModalLabel').css('color', 'red').text(error.responseJSON.message)
 }
+const onIndexFailure = function (error) {
+  $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
+}
+const onCreateFailure = function (error) {
+  $('#newCharacterModalLabel').css('color', 'red').text(error.responseJSON.message)
+}
+const onViewFailure = function (error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#viewCharacterModalLabel').css('color', 'red').text('That is not a valid ID')
+
+  } else {
+    $('#viewCharacterModalLabel').css('color', 'red').text(error.responseJSON.message)
+  }
+}
+const onDeleteFailure = function (error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#deleteCharacterModalLabel').css('color', 'red').text('That is not a valid ID')
+  } else {
+    $('#deleteCharacterModalLabel').css('color', 'red').text(error.responseJSON.message)
+  }
+}
+const onUpdateFailure = function (error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#updateCharacterModalLabel').css('color', 'red').text('That is not a valid ID')
+  } else {
+    $('#updateCharacterModalLabel').css('color', 'red').text(error.responseJSON.message)
+  }
+  $('#home-message-authenticated').html('<p>At least you tried.</p><hr>')
+}
+
 const signUpSuccess = function (response) {
-  $('#signUpModalLabel').text('Signed Up Successfully!')
+  $('#signUpModalLabel').css('color', 'green').text('Signed Up Successfully!')
   $('form').trigger('reset')
 }
 const signInSuccess = function (response) {
   store.user = response.user
-  $('#signInModalLabel').text('Signed In Successfully!')
+  $('#signInModalLabel').css('color', 'green').text('Signed In Successfully!')
   $('form').trigger('reset')
   $('#home-message-authenticated').html('<p>Welcome to your Archive</p>')
   $('.unauthenticated').hide()
   $('.authenticated').show()
   $('.close').trigger('click')
-  $('#signInModalLabel').text('Sign In Below!')
   $('#characters-index').show()
   $('#characters-new').show()
   $('#characters-view').hide()
@@ -45,7 +74,7 @@ const signInSuccess = function (response) {
 }
 const changePasswordSuccess = function (response) {
   $('form').trigger('reset')
-  $('#changePasswordModalLabel').text('Password Changed Successfully!')
+  $('#changePasswordModalLabel').css('color', 'green').text('Password Changed Successfully!')
 }
 const signOutSuccess = function () {
   $('#home-message-unauthenticated').html('<p>Signed out Successfully!</p>')
@@ -53,7 +82,6 @@ const signOutSuccess = function () {
   $('.unauthenticated').show()
   $('.authenticated').hide()
   $('.characters-display').html('')
-  modalReset()
 }
 const onHomeSuccess = function () {
   $('#home-message-authenticated').html('<p>Welcome to your Archive</p>')
@@ -66,20 +94,6 @@ const onHomeSuccess = function () {
   $('#characters-update').hide()
   $('#characters-delete').hide()
   $('#characters-view').hide()
-  modalReset()
-}
-const onIndexFailure = function (error) {
-  $('#home-message-authenticated').html(`<p>${error.responseJSON.message}</p>`)
-}
-const onCreateFailure = function (error) {
-  $('#newCharacterModalLabel').text(error.responseJSON.message)
-}
-const onViewFailure = function (error) {
-  if (error.statusText === 'Unprocessable Entity') {
-    $('#viewCharacterModalLabel').text('That is not a valid ID')
-  } else {
-    $('#viewCharacterModalLabel').text(error.responseJSON.message)
-  }
 }
 const onViewSuccess = function (responseData) {
   const character = responseData.character
@@ -95,7 +109,7 @@ const onViewSuccess = function (responseData) {
     </div>
     `)
   $('.characters-display').html(characterHTML)
-  $('#viewCharacterModalLabel').text('Success')
+  $('#viewCharacterModalLabel').css('color', 'green').text('Success')
   $('form').trigger('reset')
   $('#home-message-authenticated').html('<p>Your Character</p><hr>')
   $('#characters-index').show()
@@ -103,7 +117,6 @@ const onViewSuccess = function (responseData) {
   $('#characters-update').show()
   $('#characters-delete').show()
   $('.close').trigger('click')
-  modalReset()
 }
 const onIndexSuccess = function (responseData) {
   // assign the array of character objects to a const
@@ -138,7 +151,6 @@ const onIndexSuccess = function (responseData) {
   $('#characters-new').show()
   $('#characters-view').show()
   $('#home-button').show()
-  modalReset()
 }
 const onCreateSuccess = function (responseData) {
   const character = responseData.character
@@ -154,7 +166,7 @@ const onCreateSuccess = function (responseData) {
       <hr>
     </div>
     `)
-  $('#newCharacterModalLabel').text('Character Created Successfully')
+  $('#newCharacterModalLabel').css('color', 'green').text('Character Created Successfully')
   $('#home-message-authenticated').html('<p>Your New Character</p><hr>')
   $('.characters-display').html(characterHTML)
   $('form').trigger('reset')
@@ -163,7 +175,6 @@ const onCreateSuccess = function (responseData) {
   $('#characters-update').show()
   $('#characters-delete').show()
   $('.close').trigger('click')
-  modalReset()
 }
 const onDeleteSuccess = function (response) {
   const character = response.character
@@ -178,7 +189,7 @@ const onDeleteSuccess = function (response) {
       <hr>
     </div>
     `)
-  $('#deleteCharacterModalLabel').text('May they rest in peace.')
+  $('#deleteCharacterModalLabel').css('color', 'green').text('May they rest in peace.')
   $('form').trigger('reset')
   $('.characters-display').html(characterHTML)
   $('#home-message-authenticated').html('<p>Rest in Peace</p><hr>')
@@ -187,14 +198,6 @@ const onDeleteSuccess = function (response) {
   $('#characters-update').show()
   $('#characters-delete').show()
   $('.close').trigger('click')
-  modalReset()
-}
-const onDeleteFailure = function (error) {
-  if (error.statusText === 'Unprocessable Entity') {
-    $('#deleteCharacterModalLabel').text('That is not a valid ID')
-  } else {
-    $('#deleteCharacterModalLabel').text(error.responseJSON.message)
-  }
 }
 const onUpdateSuccess = function (characterData) {
   const character = characterData.character
@@ -211,7 +214,7 @@ const onUpdateSuccess = function (characterData) {
     </div>
     `)
   $('.characters-display').html(characterHTML)
-  $('#updateCharacterModalLabel').text('Updated Successfully')
+  $('#updateCharacterModalLabel').css('color', 'green').text('Updated Successfully')
   $('form').trigger('reset')
   $('#home-message-authenticated').html('<p>Your Updated Character</p><hr>')
   $('#characters-index').show()
@@ -219,15 +222,6 @@ const onUpdateSuccess = function (characterData) {
   $('#characters-update').show()
   $('#characters-delete').show()
   $('.close').trigger('click')
-  modalReset()
-}
-const onUpdateFailure = function (error) {
-  if (error.statusText === 'Unprocessable Entity') {
-    $('#updateCharacterModalLabel').text('That is not a valid ID')
-  } else {
-    $('#updateCharacterModalLabel').text(error.responseJSON.message)
-  }
-  $('#home-message-authenticated').html('<p>At least you tried.</p><hr>')
 }
 
 module.exports = {
@@ -244,11 +238,11 @@ module.exports = {
   onIndexFailure,
   onCreateSuccess,
   onCreateFailure,
-  // onMakeFormSuccess
   onDeleteSuccess,
   onDeleteFailure,
   onUpdateSuccess,
   onUpdateFailure,
   onViewFailure,
-  onViewSuccess
+  onViewSuccess,
+  modalReset
 }
