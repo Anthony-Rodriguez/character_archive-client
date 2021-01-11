@@ -1,6 +1,6 @@
 # Character Archive
 
-Utilize HTTP requests to create an archive of custom characters. This repo is for the front-end and speaks with the back-end [Back-end archive](https://github.com/Anthony-Rodriguez/character_archive) that was designed for this.
+Utilize HTTP requests to create an archive of custom characters. This repo is for the front-end [deployed site](https://anthony-rodriguez.github.io/character_archive-client/) and speaks with the back-end [Back-end archive](https://github.com/Anthony-Rodriguez/character_archive) that was designed for this.
 
 Create an account and sign in. You'll be give a page with a few buttons on it. Click on New Character to start making your first character. After the fields have been completed, submit the form to create your first character. The 'My Characters' button will show all the characters you have. 'View Character' will only show a single character that you choose via their ID. (This will be updated in the future). You can update your character by, you guessed it, pressing the update button. You'll have to input the ID for the character you want to update as well as fill out the entire form. Changing your password is simple, but there's no forgot-password functionality at the moment, so be careful! Signing out will prevent others from accessing your characters, so don't forget to sign out if you plan on keeping the window open!
 
