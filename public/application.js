@@ -3882,40 +3882,68 @@ module.exports = store;
 var store = __webpack_require__(131);
 
 var modalReset = function modalReset() {
-  $('#deleteCharacterModalLabel').text('Delete a Character');
-  $('#viewCharacterModalLabel').text('View a Character');
-  $('#updateCharacterModalLabel').text('Who are you changing?');
-  $('#newCharacterModalLabel').text('Who are you making?');
-  $('#changePasswordModalLabel').text('Change Password');
-  $('#signUpModalLabel').text('Sign Up Below');
-  $('#signInModalLabel').text('Sign In Below');
+  $('#deleteCharacterModalLabel').css('color', '').text('Delete a Character');
+  $('#viewCharacterModalLabel').css('color', '').text('View a Character');
+  $('#updateCharacterModalLabel').css('color', '').text('Who are you changing?');
+  $('#newCharacterModalLabel').css('color', '').text('Who are you making?');
+  $('#changePasswordModalLabel').css('color', '').text('Change Password');
+  $('#signUpModalLabel').css('color', '').text('Sign Up Below');
+  $('#signInModalLabel').css('color', '').text('Sign In Below');
 };
 
 var signOutFailure = function signOutFailure(error) {
   $('#home-message-authenticated').html('<p>' + error.responseJSON.message + '</p>');
 };
 var signUpFailure = function signUpFailure(error) {
-  $('#signUpModalLabel').text(error.responseJSON.message);
+  $('#signUpModalLabel').css('color', 'red').text(error.responseJSON.message);
 };
 var signInFailure = function signInFailure(error) {
-  $('#signInModalLabel').text(error.responseJSON.message);
+  $('#signInModalLabel').css('color', 'red').text(error.responseJSON.message);
 };
 var changePasswordFailure = function changePasswordFailure(error) {
-  $('#changePasswordModalLabel').text(error.responseJSON.message);
+  $('#changePasswordModalLabel').css('color', 'red').text(error.responseJSON.message);
 };
+var onIndexFailure = function onIndexFailure(error) {
+  $('#home-message-authenticated').html('<p>' + error.responseJSON.message + '</p>');
+};
+var onCreateFailure = function onCreateFailure(error) {
+  $('#newCharacterModalLabel').css('color', 'red').text(error.responseJSON.message);
+};
+var onViewFailure = function onViewFailure(error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#viewCharacterModalLabel').css('color', 'red').text('That is not a valid ID');
+  } else {
+    $('#viewCharacterModalLabel').css('color', 'red').text(error.responseJSON.message);
+  }
+};
+var onDeleteFailure = function onDeleteFailure(error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#deleteCharacterModalLabel').css('color', 'red').text('That is not a valid ID');
+  } else {
+    $('#deleteCharacterModalLabel').css('color', 'red').text(error.responseJSON.message);
+  }
+};
+var onUpdateFailure = function onUpdateFailure(error) {
+  if (error.statusText === 'Unprocessable Entity') {
+    $('#updateCharacterModalLabel').css('color', 'red').text('That is not a valid ID');
+  } else {
+    $('#updateCharacterModalLabel').css('color', 'red').text(error.responseJSON.message);
+  }
+  $('#home-message-authenticated').html('<p>At least you tried.</p><hr>');
+};
+
 var signUpSuccess = function signUpSuccess(response) {
-  $('#signUpModalLabel').text('Signed Up Successfully!');
+  $('#signUpModalLabel').css('color', 'green').text('Signed Up Successfully!');
   $('form').trigger('reset');
 };
 var signInSuccess = function signInSuccess(response) {
   store.user = response.user;
-  $('#signInModalLabel').text('Signed In Successfully!');
+  $('#signInModalLabel').css('color', 'green').text('Signed In Successfully!');
   $('form').trigger('reset');
   $('#home-message-authenticated').html('<p>Welcome to your Archive</p>');
   $('.unauthenticated').hide();
   $('.authenticated').show();
   $('.close').trigger('click');
-  $('#signInModalLabel').text('Sign In Below!');
   $('#characters-index').show();
   $('#characters-new').show();
   $('#characters-view').hide();
@@ -3925,7 +3953,7 @@ var signInSuccess = function signInSuccess(response) {
 };
 var changePasswordSuccess = function changePasswordSuccess(response) {
   $('form').trigger('reset');
-  $('#changePasswordModalLabel').text('Password Changed Successfully!');
+  $('#changePasswordModalLabel').css('color', 'green').text('Password Changed Successfully!');
 };
 var signOutSuccess = function signOutSuccess() {
   $('#home-message-unauthenticated').html('<p>Signed out Successfully!</p>');
@@ -3933,7 +3961,6 @@ var signOutSuccess = function signOutSuccess() {
   $('.unauthenticated').show();
   $('.authenticated').hide();
   $('.characters-display').html('');
-  modalReset();
 };
 var onHomeSuccess = function onHomeSuccess() {
   $('#home-message-authenticated').html('<p>Welcome to your Archive</p>');
@@ -3946,26 +3973,12 @@ var onHomeSuccess = function onHomeSuccess() {
   $('#characters-update').hide();
   $('#characters-delete').hide();
   $('#characters-view').hide();
-  modalReset();
-};
-var onIndexFailure = function onIndexFailure(error) {
-  $('#home-message-authenticated').html('<p>' + error.responseJSON.message + '</p>');
-};
-var onCreateFailure = function onCreateFailure(error) {
-  $('#newCharacterModalLabel').text(error.responseJSON.message);
-};
-var onViewFailure = function onViewFailure(error) {
-  if (error.statusText === 'Unprocessable Entity') {
-    $('#viewCharacterModalLabel').text('That is not a valid ID');
-  } else {
-    $('#viewCharacterModalLabel').text(error.responseJSON.message);
-  }
 };
 var onViewSuccess = function onViewSuccess(responseData) {
   var character = responseData.character;
   var characterHTML = '\n    <div>\n      <h4>Name: ' + character.firstName + ' ' + character.lastName + '</h4>\n      <h5>Level: ' + character.level + '</h5>\n      <p>Race: ' + character.race + '</p>\n      <p>Age: ' + character.age + '</p>\n      <p>Home: ' + character.homeBase + '</p>\n      <p>ID: ' + character._id + '</p>\n      <hr>\n    </div>\n    ';
   $('.characters-display').html(characterHTML);
-  $('#viewCharacterModalLabel').text('Success');
+  $('#viewCharacterModalLabel').css('color', 'green').text('Success');
   $('form').trigger('reset');
   $('#home-message-authenticated').html('<p>Your Character</p><hr>');
   $('#characters-index').show();
@@ -3973,7 +3986,6 @@ var onViewSuccess = function onViewSuccess(responseData) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('.close').trigger('click');
-  modalReset();
 };
 var onIndexSuccess = function onIndexSuccess(responseData) {
   // assign the array of character objects to a const
@@ -3998,13 +4010,12 @@ var onIndexSuccess = function onIndexSuccess(responseData) {
   $('#characters-new').show();
   $('#characters-view').show();
   $('#home-button').show();
-  modalReset();
 };
 var onCreateSuccess = function onCreateSuccess(responseData) {
   var character = responseData.character;
   // basically the same as INDEX, only there's no need for a loop
   var characterHTML = '\n    <div>\n      <h4>Name: ' + character.firstName + ' ' + character.lastName + '</h4>\n      <h5>Level: ' + character.level + '</h5>\n      <p>Race: ' + character.race + '</p>\n      <p>Age: ' + character.age + '</p>\n      <p>Home: ' + character.homeBase + '</p>\n      <p>ID: ' + character._id + '</p>\n      <hr>\n    </div>\n    ';
-  $('#newCharacterModalLabel').text('Character Created Successfully');
+  $('#newCharacterModalLabel').css('color', 'green').text('Character Created Successfully');
   $('#home-message-authenticated').html('<p>Your New Character</p><hr>');
   $('.characters-display').html(characterHTML);
   $('form').trigger('reset');
@@ -4013,12 +4024,11 @@ var onCreateSuccess = function onCreateSuccess(responseData) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('.close').trigger('click');
-  modalReset();
 };
 var onDeleteSuccess = function onDeleteSuccess(response) {
   var character = response.character;
   var characterHTML = '\n    <div>\n      <h4>Name: ' + character.firstName + ' ' + character.lastName + '</h4>\n      <h5>Level: ' + character.level + '</h5>\n      <p>Race: ' + character.race + '</p>\n      <p>Age: ' + character.age + '</p>\n      <p>Home: ' + character.homeBase + '</p>\n      <p>ID: ' + character._id + '</p>\n      <hr>\n    </div>\n    ';
-  $('#deleteCharacterModalLabel').text('May they rest in peace.');
+  $('#deleteCharacterModalLabel').css('color', 'green').text('May they rest in peace.');
   $('form').trigger('reset');
   $('.characters-display').html(characterHTML);
   $('#home-message-authenticated').html('<p>Rest in Peace</p><hr>');
@@ -4027,21 +4037,13 @@ var onDeleteSuccess = function onDeleteSuccess(response) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('.close').trigger('click');
-  modalReset();
-};
-var onDeleteFailure = function onDeleteFailure(error) {
-  if (error.statusText === 'Unprocessable Entity') {
-    $('#deleteCharacterModalLabel').text('That is not a valid ID');
-  } else {
-    $('#deleteCharacterModalLabel').text(error.responseJSON.message);
-  }
 };
 var onUpdateSuccess = function onUpdateSuccess(characterData) {
   var character = characterData.character;
   // basically the same as CREATE
   var characterHTML = '\n    <div>\n      <h4>Name: ' + character.firstName + ' ' + character.lastName + '</h4>\n      <h5>Level: ' + character.level + '</h5>\n      <p>Race: ' + character.race + '</p>\n      <p>Age: ' + character.age + '</p>\n      <p>Home: ' + character.homeBase + '</p>\n      <p>ID: ' + character._id + '</p>\n      <hr>\n    </div>\n    ';
   $('.characters-display').html(characterHTML);
-  $('#updateCharacterModalLabel').text('Updated Successfully');
+  $('#updateCharacterModalLabel').css('color', 'green').text('Updated Successfully');
   $('form').trigger('reset');
   $('#home-message-authenticated').html('<p>Your Updated Character</p><hr>');
   $('#characters-index').show();
@@ -4049,15 +4051,6 @@ var onUpdateSuccess = function onUpdateSuccess(characterData) {
   $('#characters-update').show();
   $('#characters-delete').show();
   $('.close').trigger('click');
-  modalReset();
-};
-var onUpdateFailure = function onUpdateFailure(error) {
-  if (error.statusText === 'Unprocessable Entity') {
-    $('#updateCharacterModalLabel').text('That is not a valid ID');
-  } else {
-    $('#updateCharacterModalLabel').text(error.responseJSON.message);
-  }
-  $('#home-message-authenticated').html('<p>At least you tried.</p><hr>');
 };
 
 module.exports = {
@@ -4074,13 +4067,13 @@ module.exports = {
   onIndexFailure: onIndexFailure,
   onCreateSuccess: onCreateSuccess,
   onCreateFailure: onCreateFailure,
-  // onMakeFormSuccess
   onDeleteSuccess: onDeleteSuccess,
   onDeleteFailure: onDeleteFailure,
   onUpdateSuccess: onUpdateSuccess,
   onUpdateFailure: onUpdateFailure,
   onViewFailure: onViewFailure,
-  onViewSuccess: onViewSuccess
+  onViewSuccess: onViewSuccess,
+  modalReset: modalReset
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)))
 
@@ -16731,6 +16724,9 @@ var ui = __webpack_require__(132);
 $(function () {
   $('.modal').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset');
+  });
+  $('.modal').on('hidden.bs.modal', function () {
+    ui.modalReset();
   });
   $('.authenticated').hide();
   $('#sign-up').on('submit', authEvents.onSignUp);
