@@ -47,4 +47,4 @@ Console.log() is my best friend. Any time I had an error, I would use console.lo
 
 ![unauthorized](https://i.imgur.com/atcpBzw.png)
 ![authorized](https://i.imgur.com/VJxEwA0.png)
-![character view]([Imgur](https://i.imgur.com/cwmgtMr.png))
+![character view](https://i.imgur.com/cwmgtMr.png)
